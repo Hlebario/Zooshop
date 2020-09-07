@@ -96,48 +96,36 @@ int function_show_of_list()//////////////////////////////////////////////фун�
     return num_list;
 }
 
-void creat_object()
+int creat_object()///////////////////////////////////////////////////////////////////////////////////////////////////
 {
     string type_of_animal; string sex; string name; double price; int number;
     int num_user = 1;
     cout << " Enter data " << endl;
     cout << " type of animal: ";
     cin >> type_of_animal;
-    if ("." || " | " || "," || "\\" || " / " || "\\" || """" || ":" || "{" || "}" || "[" || "]" == type_of_animal)
-    {
-        cout << "invalid character" << endl;
-    }
     cout << "enter sex: ";
     cin >> sex;
-    if ("." || " | " || "," || "\\" || " / " || "\\" || """" || ":" || "{" || "}" || "[" || "]" == sex)
-    {
-        cout << "invalid character" << endl;
-    }
     cout << " name: ";
     cin >> name;
-    if ("." || " | " || "," || "\\" || " / " || "\\" || """" || ":" || "{" || "}" || "[" || "]" == name)
+    while (true)//////////////////////////////////////////////////////////цикл проверки правильности ввода цены и количество животного
     {
-        cout << "invalid character" << endl;
+        cout << " price: ";
+        cin >> price;
+        if (cin.fail()) { cin.clear(); cin.ignore(32767, '\n'); }
+        else return price;
+        cout << " number: ";
+        cin >> number;
+        if (cin.fail()) { cin.clear(); cin.ignore(32767, '\n'); }
+        //break;
     }
-    cout << " price: ";
-    cin >> price;
-    if (cin.erro price)
-    {
-        cout << "invalid character" << endl;
-    }
-    cout << " number: ";
-    cin >> number;
-    if ("." || " | " || "," || "\\" || " / " || "\\" || """" || ":" || "{" || "}" || "[" || "]" == number)
-    {
-        cout << "invalid character" << endl;
-    }
-    ANIMAL L1(type_of_animal, sex, name, price, number);
-    // if (type_of_animal || sex || name || price || number == ".", "|", ",", "\\", "/", "\", ", """, ":)", "{", "}", ", "[", "]" ){cout << "Error" << endl; }
-    arrClass.push_back(ANIMAL(L1));// =
-    num_user++;
+
+        ANIMAL L1(type_of_animal, sex, name, price, number);
+        arrClass.push_back(ANIMAL(L1));
+        num_user++;
+    
 }
 
-void menu()
+    void menu()
 {
     while (1)
     {
