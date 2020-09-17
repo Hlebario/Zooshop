@@ -1,6 +1,7 @@
 ﻿#include <iostream>
 #include <string>
 #include <vector>
+#include <fstream>
 
 using namespace std;
 
@@ -13,6 +14,7 @@ void Logo()
         cout << "    ╫███    ███▄  ▄███  ███, ▄███  ║╬   ██▌ ██▌   ▀██  ███▄  ▄███  ██       \n" ;
         cout << "    ▀▀▀▀▀▀▀▌  █▀████▀▀   █▀███▀▀▀  ▀▀███▀█  ▀▀▌   ╜▀▀   █▀████▀█   ▀▀█      \n" ;   
 }
+
 
 class ANIMAL/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 {
@@ -99,7 +101,7 @@ void creat_object()/////////////////////////////////////////////////////////////
         cout << "=============      1. Creat new element             =============\n";
         cout << "=============       2. Edit element                   ===========\n";
         cout << "=============        3. Delete all elements               =======\n";
-        cout << "=============         4. Delete elements                    =====\n";
+        cout << "=============         4. Delete element                     =====\n";
         cout << "=============          5. Exit the program                     ==\n";
         cout << "=================================================================\n"; 
         cout << "=============      6. Save the list in new file     =============\n";
@@ -145,7 +147,26 @@ void creat_object()/////////////////////////////////////////////////////////////
         else if ("5" == i)///////////////////////////////////////////////////////////выход из программы
         {
             break;
-        }        
+        }
+        else if ("6" ==i)////////////////////////////////////////////////////////////Сохранить список в в новый файл
+        {
+            //C:\\Users\\marek\\Desktop\\filesssssi.txt
+            string adress ;
+            cout << "enter the address of the saved file\n";
+            cin >> adress;
+            ofstream file (adress);
+            if (!file)
+            {
+                cout << "failed save the file\n";
+                exit(1);
+            }
+            file << "See line #1!";
+            file.close();
+        }
+        else if ("7" == i)
+        {
+
+        }
         else { cout << "You enter not correct data\n" ; menu(); }
     }
 }
