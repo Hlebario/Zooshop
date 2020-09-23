@@ -44,11 +44,47 @@ public:
     {
        cout << " Type of animal: " << type_of_animal << " sex: " << sex << " name: " << name << " price: " << price << "$ " << " number: " << number << endl;
     }
+   /* void show_in_flow()
+    {              
+        file << " Type of animal: " << type_of_animal << " sex: " << sex << " name: " << name << " price: " << price << "$ " << " number: " << number << endl;
+        file.close();
+    }*/
+    friend void function_save_in_file();
 };
 
 
 
 vector <ANIMAL> arrClass(0);//////////////////////////////////////////////создает векторы классов
+
+void function_save_in_file()/////////////////////////////////////////////////////функция для сохранения в файл
+{
+    string adress;
+    cout << "enter the address of the saved file\n";
+    cin >> adress;
+    ofstream file(adress);
+    if (!file)
+    {
+        cerr << "failed save the file\n";
+        exit(1);
+    }    
+    int num_list = 1;
+    for (int i = 0; i < arrClass.size(); i++)
+    {
+        file << num_list++ << ". ";
+        file << arrClass[i].type_of_animal;
+        file << " ";
+        file << arrClass[i].sex;
+        file << " ";
+        file << arrClass[i].name;
+        file << " ";
+        file << arrClass[i].price;
+        file << "$ ";
+        file << arrClass[i].number;
+        file << endl;
+    }
+    file.close();
+    cout << "The File was save.\n";
+}
 
 int function_show_of_list()//////////////////////////////////////////////функция для вывода списка
 {
@@ -150,18 +186,8 @@ void creat_object()/////////////////////////////////////////////////////////////
         }
         else if ("6" ==i)////////////////////////////////////////////////////////////Сохранить список в в новый файл
         {
-            //C:\\Users\\marek\\Desktop\\filesssssi.txt
-            string adress ;
-            cout << "enter the address of the saved file\n";
-            cin >> adress;
-            ofstream file (adress);
-            if (!file)
-            {
-                cout << "failed save the file\n";
-                exit(1);
-            }
-            file << "See line #1!";
-            file.close();
+            //C:\\Users\\marek\\Desktop\\filesssssi.txt            
+            function_save_in_file();
         }
         else if ("7" == i)
         {
