@@ -49,14 +49,36 @@ public:
         file << " Type of animal: " << type_of_animal << " sex: " << sex << " name: " << name << " price: " << price << "$ " << " number: " << number << endl;
         file.close();
     }*/
-    friend void function_save_in_file();
+    friend void save_in_file();
 };
 
 
 
 vector <ANIMAL> arrClass(0);//////////////////////////////////////////////создает векторы классов
 
-void function_save_in_file()/////////////////////////////////////////////////////функция для сохранения в файл
+void open_file()
+{
+    cout << "Enter address to file: ";
+    string address;
+    cin >> address;
+    ifstream _file(address);
+    if (!_file)
+    {
+        cerr << "file: ", address;
+        cerr << "not be opened, check address or the file does not exist!" << endl;
+        exit;
+    }
+    while (_file)
+    {
+        //C:\\Users\\marek\\Desktop\\filesssssi.txt
+        string line;
+        getline(_file, line);
+        cout << line << endl;
+    }
+    _file.close();
+}
+
+void save_in_file()/////////////////////////////////////////////////////функция для сохранения в файл
 {
     string adress;
     cout << "enter the address of the saved file\n";
@@ -187,11 +209,11 @@ void creat_object()/////////////////////////////////////////////////////////////
         else if ("6" ==i)////////////////////////////////////////////////////////////Сохранить список в в новый файл
         {
             //C:\\Users\\marek\\Desktop\\filesssssi.txt            
-            function_save_in_file();
+            save_in_file();
         }
-        else if ("7" == i)
+        else if ("7" == i)///////////////////////////////////////////////////////////Открыть файд для чтения
         {
-
+            open_file();
         }
         else { cout << "You enter not correct data\n" ; menu(); }
     }
