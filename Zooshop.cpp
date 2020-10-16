@@ -44,11 +44,6 @@ public:
     {
        cout << " Type of animal: " << type_of_animal << " sex: " << sex << " name: " << name << " price: " << price << "$ " << " number: " << number << endl;
     }
-   /* void show_in_flow()
-    {              
-        file << " Type of animal: " << type_of_animal << " sex: " << sex << " name: " << name << " price: " << price << "$ " << " number: " << number << endl;
-        file.close();
-    }*/
     friend void save_in_file();
 };
 
@@ -68,13 +63,50 @@ void open_file()
         cerr << "not be opened, check address or the file does not exist!" << endl;
         exit;
     }
-    while (_file)
+    int num_user = 1;
+    while (_file)//////////////////////////////////////////////////////////алгоритм инициализации переменных: находит пробели и его позицию
+        /////////////////////////////////////////////инициализирует нужную переменную до позиции пробела, удаляет символы до пробела и т.д.
     {
-        //C:\\Users\\marek\\Desktop\\filesssssi.txt
-        string line;
+        //C:\\Users\\marek\\Desktop\\filesssssi.txt        
+        string line, type_of_animal, sex, name, _price, _number;
         getline(_file, line);
-        cout << line << endl;
-    }
+        int pos;
+        pos = line.find(".");
+        line.erase(0, 2 + pos);
+        pos = line.find(" ");
+        type_of_animal.replace(0, 0, line, 0, pos);
+        line.erase(0, ++pos);
+
+        pos = line.find(" ");
+        sex.replace(0, 0, line, 0, pos);
+        line.erase(0, ++pos);
+
+        pos = line.find(" ");
+        name.replace(0, 0, line, 0, pos);
+        line.erase(0, ++pos);
+
+
+        pos = line.find("$ ");
+        _price.replace(0, 0, line, 0, pos++);
+        line.erase(0, ++pos);
+
+        pos = line.find(" ");
+        _number.replace(0, 0, line, 0, pos);
+        line.erase(0, pos);
+
+        double price = atoi(_price.c_str());
+        int number = atoi(_number.c_str());
+        
+        if (number != 0)
+        {
+            cout << num_user << ". ";
+            ANIMAL L1(type_of_animal, sex, name, price, number);
+            arrClass.push_back(ANIMAL(L1));            
+            num_user++;
+        }
+
+        line = type_of_animal = sex = name = _price = _number = NAN;
+    }    
     _file.close();
 }
 
@@ -108,7 +140,7 @@ void save_in_file()/////////////////////////////////////////////////////функ
     cout << "The File was save.\n";
 }
 
-int function_show_of_list()//////////////////////////////////////////////функция для вывода списка
+int show_of_list()//////////////////////////////////////////////функция для вывода списка
 {
     int num_list = 1;
     for (int i = 0; i < arrClass.size(); i++)
@@ -165,25 +197,31 @@ void creat_object()/////////////////////////////////////////////////////////////
         cout << "=============      6. Save the list in new file     =============\n";
         cout << "=============       7. Open file for read             ===========\n";
         cout << "=================================================================\n";
+        cout << "=============      8. Sort animals by ascending cost ============\n";
+        cout << "=============       9. Sort animals by descending cost ==========\n";
+        cout << "=============        10. Sort animals by ascending numbers ======\n";
+        cout << "=============         11. Sort animals by descending numbers ====\n";
+        cout << "=================================================================\n";
+
         string i;
         cin >> i;
         cout << endl;
         if ("1" == i)///////////////////////////////////////////////////////////если 1 то создает элемент
         {
             creat_object();           
-            function_show_of_list();///////////////////////////////////////////функция для показа списка       
+            show_of_list();///////////////////////////////////////////функция для показа списка       
         }
         else if ("2" == i)///////////////////////////////////////////////////////////если 2 то изменяеет элемент
         {
             cout << "Enter the number of the element in the list to change \n";
             int num_user = 0;
-            function_show_of_list();///////////////////////////////////////////функция для показа списка            
+            show_of_list();///////////////////////////////////////////функция для показа списка            
             cin >> num_user;
             cout << num_user << ". ";
             arrClass[--num_user].show();
             cout << endl;
             creat_object();
-            function_show_of_list();///////////////////////////////////////////функция для показа списка            
+            show_of_list();///////////////////////////////////////////функция для показа списка            
         }
         else if ("3" == i)///////////////////////////////////////////////////////////удаляет все элементы
         {
@@ -193,14 +231,14 @@ void creat_object()/////////////////////////////////////////////////////////////
         {
             cout << "Enter the number of the element in the list to delete \n" ;
             int num_user = 0;
-            function_show_of_list();/////////////////////////////////////////////////функция для показа списка            
+            show_of_list();/////////////////////////////////////////////////функция для показа списка            
             int n;
             cin >> n;
             auto iter = arrClass.cbegin();
             arrClass.erase(iter + n - 1);
             cout << endl << "Result: \n";
             num_user = 0;
-            function_show_of_list();/////////////////////////////////////////////////функция для показа списка            
+            show_of_list();/////////////////////////////////////////////////функция для показа списка            
         }
         else if ("5" == i)///////////////////////////////////////////////////////////выход из программы
         {
@@ -217,6 +255,12 @@ void creat_object()/////////////////////////////////////////////////////////////
         }
         else { cout << "You enter not correct data\n" ; menu(); }
     }
+
+    /*cout << "=============      8. Sort animals by ascending cost ============\n";
+    cout << "=============       9. Sort animals by descending cost ==========\n";
+    cout << "=============        10. Sort animals by ascending numbers ======\n";
+    cout << "=============         11. Sort animals by descending numbers ====\n";
+    cout << "=================================================================\n";*/
 }
 
 int main(int argc, char* argv[])
@@ -226,6 +270,6 @@ int main(int argc, char* argv[])
     cout << endl;
     menu();
     int num_list;
-    num_list = function_show_of_list();
+    num_list = show_of_list();
     creat_object();    
 }
