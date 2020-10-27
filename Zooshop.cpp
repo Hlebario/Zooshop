@@ -38,18 +38,59 @@ public:
     };
     void show(string type_of_animal, string sex, string name, double price, int number)
     {
-        cout << " Type of animal: " << type_of_animal << " sex: " << sex << " name: " << name << " price: " << price << "$ " << " number: " << number << endl;
+        cout << " Type of animal: "<<type_of_animal<<" sex: "<<sex<<" name: "<<name<<" price: "<<price<<"$ "<<" number: "<<number<<endl;
     };
     void show()
     {
-       cout << " Type of animal: " << type_of_animal << " sex: " << sex << " name: " << name << " price: " << price << "$ " << " number: " << number << endl;
+       cout <<" Type of animal: "<<type_of_animal<<" sex: "<<sex<<" name: "<<name<<" price: "<<price<<"$ "<<" number: "<<number<<endl;
     }
+
+    ANIMAL& operator= (const ANIMAL& ghost)///////////////////////////////Перегрузка оператора присваивания
+    {
+        type_of_animal = ghost.type_of_animal;
+        sex = ghost.sex;
+        name = ghost.name;
+        sex = ghost.sex;
+        price = ghost.price;
+        number = ghost.number;
+
+        return *this;
+    }
+
     friend void save_in_file();
+    friend void quicksort();
 };
 
 
 
 vector <ANIMAL> arrClass(0);//////////////////////////////////////////////создает векторы классов
+int show_of_list();
+void quicksort()
+{
+    int first = 0, last = arrClass.size() - 1;     
+        int mid, count;
+        int f = first, l = last;
+        mid = arrClass[(f + l) / 2].price;
+        do
+        {
+            while (arrClass[f].price < mid) f++;
+            while (arrClass[l].price > mid) l--;
+            if (f <= l)
+            {
+                ANIMAL ghost = arrClass[f];//////////////////////////////////////////////////////////////////////////////////////////////////////
+                arrClass[f] = arrClass[l];
+                arrClass[l] = ghost;
+                f++;
+                l--;
+            }
+        } while (f < l);
+        if (first < l) quicksort();
+        if (f < last) quicksort();
+        else
+        {
+            show_of_list();            
+        }
+}
 
 void open_file()
 {
@@ -101,7 +142,8 @@ void open_file()
         {
             cout << num_user << ". ";
             ANIMAL L1(type_of_animal, sex, name, price, number);
-            arrClass.push_back(ANIMAL(L1));            
+            arrClass.push_back(ANIMAL(L1));
+            cout << endl;
             num_user++;
         }
 
@@ -183,7 +225,7 @@ void creat_object()/////////////////////////////////////////////////////////////
         num_user++;    
 }
 
-    void menu()
+void menu()
 {
     while (1)
     {
@@ -193,7 +235,7 @@ void creat_object()/////////////////////////////////////////////////////////////
         cout << "=============        3. Delete all elements               =======\n";
         cout << "=============         4. Delete element                     =====\n";
         cout << "=============          5. Exit the program                     ==\n";
-        cout << "=================================================================\n"; 
+        cout << "=================================================================\n";
         cout << "=============      6. Save the list in new file     =============\n";
         cout << "=============       7. Open file for read             ===========\n";
         cout << "=================================================================\n";
@@ -208,7 +250,7 @@ void creat_object()/////////////////////////////////////////////////////////////
         cout << endl;
         if ("1" == i)///////////////////////////////////////////////////////////если 1 то создает элемент
         {
-            creat_object();           
+            creat_object();
             show_of_list();///////////////////////////////////////////функция для показа списка       
         }
         else if ("2" == i)///////////////////////////////////////////////////////////если 2 то изменяеет элемент
@@ -229,7 +271,7 @@ void creat_object()/////////////////////////////////////////////////////////////
         }
         else if ("4" == i)///////////////////////////////////////////////////////////удаляет определенный элемент
         {
-            cout << "Enter the number of the element in the list to delete \n" ;
+            cout << "Enter the number of the element in the list to delete \n";
             int num_user = 0;
             show_of_list();/////////////////////////////////////////////////функция для показа списка            
             int n;
@@ -244,7 +286,7 @@ void creat_object()/////////////////////////////////////////////////////////////
         {
             break;
         }
-        else if ("6" ==i)////////////////////////////////////////////////////////////Сохранить список в в новый файл
+        else if ("6" == i)////////////////////////////////////////////////////////////Сохранить список в в новый файл
         {
             //C:\\Users\\marek\\Desktop\\filesssssi.txt            
             save_in_file();
@@ -253,14 +295,27 @@ void creat_object()/////////////////////////////////////////////////////////////
         {
             open_file();
         }
-        else { cout << "You enter not correct data\n" ; menu(); }
-    }
+        else if ("8" == i)///////////////////////////////////////////////////////////сортировать по стоймости возрастания
+        {
 
-    /*cout << "=============      8. Sort animals by ascending cost ============\n";
-    cout << "=============       9. Sort animals by descending cost ==========\n";
-    cout << "=============        10. Sort animals by ascending numbers ======\n";
-    cout << "=============         11. Sort animals by descending numbers ====\n";
-    cout << "=================================================================\n";*/
+            quicksort();
+        }
+        else if ("9" == i)///////////////////////////////////////////////////////////сортировать по стоймости убывания
+        {
+
+        }
+        else if ("10" == i)///////////////////////////////////////////////////////////сортировать по количеству возрастания
+        {
+
+        }
+        else if ("11" == i)///////////////////////////////////////////////////////////сортировать по количеству убывания
+        {
+
+        }
+
+        else { cout << "You enter not correct data\n"; menu(); }
+
+    }
 }
 
 int main(int argc, char* argv[])
